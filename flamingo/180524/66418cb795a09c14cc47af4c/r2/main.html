@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 10px;
+        }
+
+        .square {
+            width: 50px;
+            height: 50px;
+            background-color: blue;
+            cursor: pointer;
+        }
+
+        .unique {
+            background-color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="grid" id="grid"></div>
+    <p id="score">Score: 0</p>
+    <script>
+        let score = 0;
+        let startTime = Date.now();
+        let endTime = startTime + 90000;
+
+        function createGrid() {
+            const grid = document.getElementById('grid');
+            grid.innerHTML = '';
+
+            for (let i = 0; i < 36; i++) {
+                const square = document.createElement('div');
+                square.className = 'square';
+                square.onclick = checkClick;
+
+                if (i === Math.floor(Math.random() * 36)) {
+                    square.classList.add('unique');
+                }
+
+                grid.appendChild(square);
+            }
+        }
+
+        function checkClick() {
+            if (this.classList.contains('unique')) {
+                score++;
+                document.getElementById('score').innerText = `Score: ${score}`;
+                createGrid();
+            }
+        }
+
+        createGrid();
+
+        setInterval(() => {
+            if (Date.now() > endTime) {
+                alert(`Game over! Your final score is ${score}.`);
+            }
+        }, 1000);
+    </script>
+</body>
+
+</html>
