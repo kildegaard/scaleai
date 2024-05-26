@@ -1,0 +1,3 @@
+Dear Contributor. Your prompt's ideas are very nice and can create good situations to analyze here, but there are too many issues in this case. They are too open-ended because you did not set good and clear constraints. Also, for what it looks like, you had not tested them. If so, you failed to put that down in the justifications.
+Consider modifying these details in order to adapt them according to the guidelines.
+Thanks for your efforts in the project!
