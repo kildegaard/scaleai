@@ -1,0 +1,1 @@
+{"name":"probandoTask","version":"0.0.1","private":true,"scripts":{"start":"node node_modules/react-native/local-cli/cli.js start"},"dependencies":{"@react-native-firebase/app":"^20.0.0","@react-native-firebase/messaging":"^20.0.0","react-native":"0.74.1","yarn":"^1.22.22"}}

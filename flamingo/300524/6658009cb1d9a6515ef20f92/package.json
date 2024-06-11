@@ -1,0 +1,17 @@
+{
+  "name": "6658009cb1d9a6515ef20f92",
+  "version": "1.0.0",
+  "main": "app.js",
+  "type": "commonjs",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "chalk": "4.0.0",
+    "yargs": "^17.7.2"
+  }
+}

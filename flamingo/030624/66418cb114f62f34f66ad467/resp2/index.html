@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List App</title>
+    <style>
+        .crossed-out {
+            text-decoration: line-through;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>To-Do List App</h1>
+    <form id="add-task-form">
+        <input type="text" id="task-input" placeholder="Enter task name">
+        <input type="date" id="due-date-input">
+        <button id="add-task-btn">Add Task</button>
+    </form>
+    <ul id="task-list"></ul>
+    <input type="search" id="search-input" placeholder="Search tasks">
+    <button id="filter-btn">Filter by Due Date</button>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
