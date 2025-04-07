@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Modal</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+
+<body>
+
+    <input type="checkbox" id="modal-toggle" class="modal-toggle">
+    <label for="modal-toggle" id="openModal" class="modal-trigger">Subscribe</label>
+
+    <div class="modal">
+        <div class="modal-content">
+            <label for="modal-toggle" class="close">&times;</label>
+            <p>Enter your email to subscribe:</p>
+            <form id="email-form">
+                <input type="email" id="email" placeholder="Enter your email" required>
+                <button type="submit" id="submit-button">Subscribe</button>
+            </form>
+        </div>
+    </div>
+
+    <p id="email-display"></p>
+
+    <script src="index.js"></script>
+
+</body>
+
+</html>

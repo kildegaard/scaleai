@@ -1,0 +1,16 @@
+/* Basic Styling */
+body {
+    background-color: #212529;
+    /* Dark background */
+    color: #fff;
+    /* White text */
+}
+
+/* Jumbotron Styling */
+#jumbotron {
+    background: url("https://source.unsplash.com/1920x1080/?graphic-design") center/cover no-repeat;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    /* Vertically center content */
+}

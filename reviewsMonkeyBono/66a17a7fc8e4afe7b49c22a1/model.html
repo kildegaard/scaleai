@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Date Converter</title>
+    <script>
+        function convertDate() {
+            const inputDate = document.getElementById("dateInput").value;
+            const dateParts = inputDate.split(/[\/\-\s\\\\]/);
+
+            // Check if the input has three parts (day, month, year)
+            if (dateParts.length !== 3) {
+                document.getElementById("result").innerHTML = "Invalid date format. Please use DD-MM-YYYY.";
+                return;
+            }
+
+            // Parse date components, allowing single-digit numbers
+            let day = parseInt(dateParts[0], 10);
+            let month = parseInt(dateParts[1], 10);
+            let year = parseInt(dateParts[2], 10);
+
+            // Basic validation for day, month, and year
+            if (isNaN(day) || day < 1 || day > 31 ||
+                isNaN(month) || month < 1 || month > 12 ||
+                isNaN(year)) {
+                document.getElementById("result").innerHTML = "Invalid date.";
+                return;
+            }
+
+            // Create a Date object for further validation
+            const date = new Date(year, month - 1, day);
+            if (date.getFullYear() !== year || date.getMonth() !== month - 1 || date.getDate() !== day) {
+                document.getElementById("result").innerHTML = "Invalid date.";
+                return;
+            }
+
+            // Format the date as DD-MM-YYYY
+            const formattedDate = `${padZero(day)}-${padZero(month)}-${year}`;
+            document.getElementById("result").innerHTML = "Converted date: " + formattedDate;
+        }
+
+        // Helper function to add leading zero for single-digit numbers
+        function padZero(number) {
+            return (number < 10 ? '0' : '') + number;
+        }
+    </script>
+</head>
+
+<body>
+    <h1>Date Converter</h1>
+    <p>Enter a date (DD-MM-YYYY):</p>
+    <input type="text" id="dateInput">
+    <button onclick="convertDate()">Convert</button>
+    <p id="result"></p>
+</body>
+
+</html>

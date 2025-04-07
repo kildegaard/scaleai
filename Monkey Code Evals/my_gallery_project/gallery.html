@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>HTMX Photography Gallery</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://unpkg.com/htmx.org@1.8.4"></script>
+</head>
+
+<body>
+    <h1>Photography Gallery</h1>
+
+    <div class="gallery">
+        <img src="images/image1.jpg" class="gallery-item" hx-post="/select-image" hx-swap="innerHTML"
+            hx-target="#image-options">
+        <img src="images/image2.jpg" class="gallery-item" hx-post="/select-image" hx-swap="innerHTML"
+            hx-target="#image-options">
+    </div>
+
+    <div id="image-options">
+        <h2>Export Options</h2>
+        <button hx-get="/export?format=jpg">Export as JPG</button>
+        <button hx-get="/export?format=png">Export as PNG</button>
+    </div>
+
+    <script>
+        // Optional - Makes the gallery look nicer
+        document.body.addEventListener('htmx:load', function (evt) {
+            let gallery = evt.detail.elt.closest('.gallery');
+            if (gallery) {
+                gallery.classList.add('gallery-grid'); // Add your CSS rules
+            }
+        });
+    </script>
+</body>
+
+</html>

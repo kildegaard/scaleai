@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Dodge Falling Objects Game</title>
+    <style>
+        /* Add some basic styling to center the canvas */
+        canvas {
+            border: 1px solid black;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="gameCanvas" width="600" height="800"></canvas>
+    <script>
+        // Get the canvas element
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+
+        // Set the canvas dimensions
+        canvas.width = 600;
+        canvas.height = 800;
+
+        // Define some colors
+        const SKY_COLOR = '#87CEEB';
+        const GRASS_COLOR = '#32CD32';
+        const ROCK_COLOR = '#666666';
+        const FRUIT_COLOR = '#FFA07A';
+
+        // Define the player properties
+        const player = {
+            x: canvas.width / 2,
+            y: canvas.height - 50,
+            width: 50,
+            height: 50,
+            speed: 5,
+            score: 0,
+        };
+
+        // Define the rock properties
+        const rocks = [];
+        const rockSize = 30;
+        const rockSpeed = 2;
+
+        // Define the fruit properties
+        const fruits = [];
+        const fruitSize = 30;
+        const fruitSpeed = 2;
+
+        // Main game loop
+        function update() {
+            // Clear the canvas
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Draw the background
+            drawBackground();
+
+            // Update and draw the player
+            updatePlayer();
+            drawPlayer();
+
+            // Update and draw the rocks
+            updateRocks();
+            drawRocks();
+
+            // Update and draw the fruits
+            updateFruits();
+            drawFruits();
+
+            // Draw the score
+            drawScore();
+
+            // Request the next frame
+            requestAnimationFrame(update);
+        }
+
+        // Draw the background
+        function drawBackground() {
+            // Draw the sky
+            ctx.fillStyle = SKY_COLOR;
+            ctx.fillRect(0, 0, canvas.width, canvas.height - 100);
+
+            // Draw the grass
+            ctx.fillStyle = GRASS_COLOR;
+            ctx.fillRect(0, canvas.height - 100, canvas.width, 100);
+        }
+
+        // Update the player position
+        function updatePlayer() {
+            // Check for keyboard input
+            if (isKeyPressed('ArrowLeft') || isKeyPressed('a')) {
+                player.x -= player.speed;
+            }
+            if (isKeyPressed('ArrowRight') || isKeyPressed('d')) {
+                player.x += player.speed;
+            }
+
+            // Ensure the player stays within the bounds
+            player.x = Math.max(0, Math.min(player.x, canvas.width - player.width));
+        }
+
+        // Draw the player
+        function drawPlayer() {
+            ctx.fillStyle = 'black';
+            ctx.fillRect(player.x, player.y, player.width, player.height);
+        }
+
+        // Update the rock positions
+        function updateRocks() {
+            // Randomly add new rocks
+            const rockProbality = 0.05 + Math.floor(player.score / 100) * 0.01;
+            if (Math.random() < rockProbality) {
+                rocks.push({
+                    x: Math.random() * (canvas.width - rockSize),
+                    y: 0,
+                });
+            }
+
+            // Update the rock positions
+            for (let i = rocks.length - 1; i >= 0; i--) {
+                rocks[i].y += rockSpeed;
+
+                // Check for collision with the player
+                if (checkCollision(player, rocks[i], rockSize)) {
+                    // Reset the game
+                    player.score = 0;
+                    rocks.length = 0;
+                    fruits.length = 0;
+                }
+
+                // Remove rocks that are off the screen
+                if (rocks[i].y > canvas.height) {
+                    rocks.splice(i, 1);
+                    player.score += 10;
+                }
+            }
+        }
+
+        // Draw the rocks
+        function drawRocks() {
+            ctx.fillStyle = ROCK_COLOR;
+            for (const rock of rocks) {
+                ctx.fillRect(rock.x, rock.y, rockSize, rockSize);
+            }
+        }
+
+        // Update the fruit positions
+        function updateFruits() {
+            // Randomly add new fruits
+            if (Math.random() < 0.01) {
+                fruits.push({
+                    x: Math.random() * (canvas.width - fruitSize),
+                    y: 0,
+                });
+            }
+
+            // Update the fruit positions
+            for (let i = fruits.length - 1; i >= 0; i--) {
+                fruits[i].y += fruitSpeed;
+
+                // Check for collision with the player
+                if (checkCollision(player, fruits[i], fruitSize)) {
+                    player.score += 100;
+                    fruits.splice(i, 1);
+                }
+
+                // Remove fruits that are off the screen
+                if (fruits[i].y > canvas.height) {
+                    fruits.splice(i, 1);
+                }
+            }
+        }
+
+        // Draw the fruits
+        function drawFruits() {
+            ctx.fillStyle = FRUIT_COLOR;
+            for (const fruit of fruits) {
+                ctx.fillRect(fruit.x, fruit.y, fruitSize, fruitSize);
+            }
+        }
+
+        // Draw the score
+        function drawScore() {
+            ctx.font = '24px Arial';
+            ctx.fillStyle = 'black';
+            ctx.textAlign = 'left';
+            ctx.textBaseline = 'top';
+            ctx.fillText(`Score: ${player.score}`, 10, 10);
+        }
+
+        // Check for keyboard input
+        function isKeyPressed(key) {
+            return keys[key];
+        }
+
+        // Store the keyboard input
+        const keys = {};
+
+        // Handle keyboard events
+        document.addEventListener('keydown', (event) => {
+            keys[event.key] = true;
+        });
+        document.addEventListener('keyup', (event) => {
+            keys[event.key] = false;
+        });
+
+        // Check for collision between two objects
+        function checkCollision(obj1, obj2, size) {
+            return (obj1.x < obj2.x + size &&
+                obj1.x + obj1.width > obj2.x &&
+                obj1.y < obj2.y + size &&
+                obj1.y + obj1.height > obj2.y);
+        }
+
+        // Start the game loop
+        update();
+    </script>
+</body>
+
+</html>

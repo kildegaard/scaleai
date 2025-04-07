@@ -1,0 +1,27 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Log Monitor</title>
+  <style>
+    /* Add some basic styling to the log display */
+    #log {
+      font-family: monospace;
+      white-space: pre;
+    }
+  </style>
+</head>
+<body>
+  <div id="log"></div>
+  <script src="https://cdn.socket.io/socket.io-3.1.1.min.js"></script>
+  <script>
+    // Set up the Socket.IO connection
+    const socket = io('http://localhost:3000');
+
+    // Handle log updates from the server
+    socket.on('log update', (data) => {
+      document.getElementById('log').innerText = data;
+    });
+  </script>
+</body>
+</html>

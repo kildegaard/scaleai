@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Dodge Falling Objects Game</title>
+    <style>
+        canvas {
+            border: 1px solid black;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="gameCanvas" width="600" height="800"></canvas>
+    <script>
+        // ... (colors, player, rockSize, fruitSize remain the same)
+
+        // Rock properties
+        const rocks = [];
+        const baseRockSpeed = 2;
+        let rockSpeed = baseRockSpeed;
+        const rockSpawnInterval = 100; // Initial interval in frames
+
+        // Fruit properties
+        const fruits = [];
+        const baseFruitSpeed = 2;
+        let fruitSpeed = baseFruitSpeed;
+
+        // Game state
+        let framesElapsed = 0;
+
+        // Main game loop
+        function update() {
+            framesElapsed++;
+
+            // ... (clear canvas, draw background)
+
+            // Update and draw player
+            updatePlayer();
+            drawPlayer();
+
+            // Update and draw rocks
+            updateRocks();
+            drawRocks();
+
+            // Update and draw fruits
+            updateFruits();
+            drawFruits();
+
+            // Draw score
+            drawScore();
+
+            // Request next frame
+            requestAnimationFrame(update);
+        }
+
+        // ... (drawBackground, updatePlayer, drawPlayer remain the same)
+
+        // Update rock positions
+        function updateRocks() {
+            // Adjust rock spawn interval based on score
+            if (player.score > 0 && player.score % 100 === 0) {
+                rockSpawnInterval -= 5; // Decrease interval by 5 frames
+                rockSpawnInterval = Math.max(20, rockSpawnInterval); // Limit to a minimum of 20 frames
+                rockSpeed += 0.2; // Increase rock speed slightly
+            }
+
+            // Spawn rocks based on interval
+            if (framesElapsed % rockSpawnInterval === 0) {
+                rocks.push({
+                    x: Math.random() * (canvas.width - rockSize),
+                    y: 0,
+                });
+            }
+
+            // ... (rest of updateRocks logic remains the same)
+        }
+
+        // ... (drawRocks, updateFruits, drawFruits, drawScore, input handling, checkCollision remain the same)
+
+        // Start the game loop
+        update();
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>IoT House Sketch</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: sans-serif;
+        }
+
+        .container {
+            display: flex;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(20, 25px);
+            /* Adjust grid size as needed */
+            grid-template-rows: repeat(20, 25px);
+            border: 1px solid #ccc;
+            cursor: crosshair;
+        }
+
+        .grid-cell {
+            width: 25px;
+            height: 25px;
+            border: 1px solid #eee;
+            background-color: transparent;
+        }
+
+        .grid-cell.wall {
+            background-color: #333;
+        }
+
+        .toolbar {
+            width: 200px;
+            background-color: #f0f0f0;
+            padding: 10px;
+            border-left: 1px solid #ccc;
+        }
+
+        .toolbar h2 {
+            margin-top: 0;
+        }
+
+        .tool-button {
+            display: block;
+            margin-bottom: 10px;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            text-align: center;
+            cursor: pointer;
+            background-color: #fff;
+        }
+
+        .tool-button:hover {
+            background-color: #e0e0e0;
+        }
+
+        .tool-button.active {
+            background-color: #ddd;
+        }
+
+        /* Icon placeholders - replace with actual icons */
+        .icon {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            background-color: #999;
+            /* Placeholder color */
+            margin-right: 5px;
+        }
+
+        .icon.draw-wall {
+            background-color: #333;
+            /* Example color for draw wall icon */
+        }
+
+        .icon.delete-wall {
+            background-color: #f00;
+            /* Example color for delete wall icon */
+        }
+
+        .icon.add-device {
+            background-color: #00f;
+            /* Example color for add device icon */
+        }
+
+        .icon.delete-device {
+            background-color: #f80;
+            /* Example color for delete device icon */
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="grid">
+        </div>
+        <div class="toolbar">
+            <h2>Tools</h2>
+            <button class="tool-button active" data-tool="draw-wall">
+                <span class="icon draw-wall"></span>Draw Wall
+            </button>
+            <button class="tool-button" data-tool="delete-wall">
+                <span class="icon delete-wall"></span>Delete Wall
+            </button>
+            <button class="tool-button" data-tool="add-device">
+                <span class="icon add-device"></span>Add Device
+            </button>
+            <button class="tool-button" data-tool="delete-device">
+                <span class="icon delete-device"></span>Delete Device
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Basic JavaScript for grid generation and tool selection
+        const gridContainer = document.querySelector('.grid');
+        const toolButtons = document.querySelectorAll('.tool-button');
+
+        // Generate grid cells
+        for (let i = 0; i < 400; i++) { // 20x20 grid
+            const cell = document.createElement('div');
+            cell.classList.add('grid-cell');
+            gridContainer.appendChild(cell);
+        }
+
+        // Tool selection logic
+        let activeTool = 'draw-wall'; // Default tool
+
+        toolButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Remove 'active' class from previously selected button
+                document.querySelector('.tool-button.active').classList.remove('active');
+
+                // Add 'active' class to the clicked button
+                button.classList.add('active');
+
+                // Update activeTool variable
+                activeTool = button.dataset.tool;
+            });
+        });
+    </script>
+</body>
+
+</html>

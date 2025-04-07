@@ -1,0 +1,45 @@
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.grid-container {
+    display: flex;
+}
+
+.grid-box {
+    width: 40px;
+    height: 40px;
+    border: 1px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: "Franklin Gothic Medium", sans-serif;
+    font-weight: bold;
+    font-size: 24px;
+    color: black;
+    background-color: white;
+    margin: 2px;
+}
+
+.highlighted {
+    background-color: lightblue;
+}
+
+/* Line Styles */
+.line {
+    height: 2px;
+    background-color: orange;
+    position: absolute;
+    width: 100%;
+}
+
+.above {
+    top: 0;
+}
+
+.below {
+    bottom: 0;
+}

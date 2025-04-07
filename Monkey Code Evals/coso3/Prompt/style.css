@@ -1,0 +1,31 @@
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.grid-container {
+    display: flex;
+}
+
+.grid-box {
+    width: 40px;
+    height: 40px;
+    border: 1px solid black;
+    /* Center content */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-family: "Franklin Gothic Medium", sans-serif;
+    font-weight: bold;
+    font-size: 24px;
+    color: black;
+    background-color: white;
+    margin: 2px;
+}
+
+.highlighted {
+    background-color: lightblue;
+}

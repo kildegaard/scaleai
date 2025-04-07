@@ -1,0 +1,25 @@
+HTML:<br>html<br>
+<!DOCTYPE html><br>
+<html lang="en"><br>
+
+<head><br>
+    <meta charset="UTF-8"><br>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"><br>
+    <title>Finance Dashboard</title><br>
+</head><br>
+
+<body><br>
+    <div id="expenses-container"><br>
+        <h2>Expenses</h2><br>
+        <div id="expense-chart"></div><br>
+    </div><br>
+    <script src="expenses.js"></script><br>
+</body><br>
+
+</html>
+
+<br><br>JavaScript:<br>javascript<br>// expenses.js<br>const expenseChart =
+document.getElementById('expense-chart');<br><br>function updateExpenseChart(data) {<br> expenseChart.innerHTML = `<p>
+    Total Expenses: $${data.total}</p>`;<br>}<br><br>function fetchExpenses() {<br> fetch('/api/expenses')<br>
+.then(response => response.json())<br> .then(data => {<br> updateExpenseChart(data);<br> })<br> .catch(error => {<br>
+console.error('Error fetching expenses:', error);<br> });<br>}<br><br>setInterval(fetchExpenses, 5000);<br>

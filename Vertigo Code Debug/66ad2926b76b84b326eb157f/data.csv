@@ -1,0 +1,11 @@
+name,age,email,years_worked,amount_spent
+John Doe,15,john@example.com,1,100
+Jane Smith,17,jane@example.com,1,50
+Alice Johnson,30,alice@example.com,5,150
+Bob Brown,22,bob@example.com,2,200
+Charlie Davis,27,charlie@example.com,1,120
+Diana Evans,19,diana@example.com,1,80
+Ethan Harris,31,ethan@example.com,1,170
+Fiona Green,20,fiona@example.com,1,90
+George Hill,29,george@example.com,1,130
+Hannah King,26,hannah@example.com,0,140

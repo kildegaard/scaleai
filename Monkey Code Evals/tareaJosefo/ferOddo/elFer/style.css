@@ -1,0 +1,124 @@
+/* Basic Styling */
+:root {
+    --primary-color: #BB86FC;
+    --primary-variant: #3700B3;
+    --secondary-color: #03DAC6;
+    --background: #121212;
+    --surface: #1E1E1E;
+    --error: #CF6679;
+    --on-primary: #000000;
+    --on-secondary: #000000;
+    --on-background: #FFFFFF;
+    --on-surface: #FFFFFF;
+    --on-error: #000000;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    color: var(--on-background);
+    background-color: var(--background);
+}
+
+footer {
+    background-color: var(--surface);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    color: var(--primary-color);
+}
+
+/* Class Styling */
+.navbar {
+    background-color: var(--surface) !important;
+}
+
+.jumbotron {
+    background-image: url('https://images.unsplash.com/photo-1541873676-a18131494184?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1496&q=80');
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    position: relative;
+}
+
+.jumbotron::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
+.jumbotron .container {
+    position: relative;
+    z-index: 1;
+}
+
+#about,
+#portfolio,
+#contact {
+    background-color: var(--surface);
+}
+
+.card {
+    background-color: var(--background);
+    border: none;
+    transition: transform 0.3s ease-in-out;
+    height: 100%;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.card-body {
+    color: var(--on-surface);
+}
+
+.card-img-top {
+    height: 200px;
+    object-fit: cover;
+}
+
+.form-control {
+    background-color: var(--background);
+    border: 1px solid var(--primary-color);
+    color: var(--on-background);
+}
+
+.form-control::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    border: none;
+    color: var(--on-primary);
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-variant);
+}
+
+.social-icons a {
+    font-size: 1.5rem;
+    transition: color 0.3s ease-in-out;
+    color: var(--primary-color) !important;
+}
+
+.social-icons a:hover {
+    color: var(--secondary-color) !important;
+}
+
+.about-image {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}

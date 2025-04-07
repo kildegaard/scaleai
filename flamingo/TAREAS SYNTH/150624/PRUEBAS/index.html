@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canvas Animation</title>
+    <style>
+        /* Estilos opcionales para centrar el canvas en la página */
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        canvas {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Elemento canvas -->
+    <canvas id="canvas"></canvas>
+
+    <!-- Código JavaScript -->
+    <script>
+        // Get the canvas element
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+
+        // Set the canvas dimensions
+        canvas.width = 800;
+        canvas.height = 600;
+
+        // Define the cell size
+        const cellSize = 10;
+
+        // Define the grid dimensions
+        const gridWidth = Math.floor(canvas.width / cellSize);
+        const gridHeight = Math.floor(canvas.height / cellSize);
+
+        // Create a 2D array to represent the grid
+        const grid = new Array(gridHeight).fill(0).map(() => new Array(gridWidth).fill(0));
+
+        // Define the color intensity decay rate
+        const decayRate = 0.9;
+
+        // Define the color intensity threshold
+        const threshold = 0.1;
+
+        // Define the frame rate
+        const frameRate = 60;
+
+        // Define the animation variables
+        let animationRunning = false;
+        let animationQueue = [];
+
+        // Function to draw the grid
+        function drawGrid() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (let y = 0; y < gridHeight; y++) {
+                for (let x = 0; x < gridWidth; x++) {
+                    const intensity = grid[y][x];
+                    if (intensity > threshold) {
+                        ctx.fillStyle = `rgba(255, 0, 0, ${intensity})`;
+                        ctx.fillRect(x * cellSize, y * cellSize, cellSize, cellSize);
+                    }
+                }
+            }
+        }
+
+        // Function to update the grid
+        function updateGrid() {
+            const newGrid = new Array(gridHeight).fill(0).map(() => new Array(gridWidth).fill(0));
+            for (let y = 0; y < gridHeight; y++) {
+                for (let x = 0; x < gridWidth; x++) {
+                    const intensity = grid[y][x];
+                    if (intensity > threshold) {
+                        newGrid[y][x] = intensity * decayRate;
+                        if (x > 0) newGrid[y][x - 1] = Math.max(newGrid[y][x - 1], intensity * decayRate);
+                        if (x < gridWidth - 1) newGrid[y][x + 1] = Math.max(newGrid[y][x + 1], intensity * decayRate);
+                        if (y > 0) newGrid[y - 1][x] = Math.max(newGrid[y - 1][x], intensity * decayRate);
+                        if (y < gridHeight - 1) newGrid[y + 1][x] = Math.max(newGrid[y + 1][x], intensity * decayRate);
+                        if (x > 0 && y > 0) newGrid[y - 1][x - 1] = Math.max(newGrid[y - 1][x - 1], intensity * decayRate * 0.7);
+                        if (x < gridWidth - 1 && y > 0) newGrid[y - 1][x + 1] = Math.max(newGrid[y - 1][x + 1], intensity * decayRate * 0.7);
+                        if (x > 0 && y < gridHeight - 1) newGrid[y + 1][x - 1] = Math.max(newGrid[y + 1][x - 1], intensity * decayRate * 0.7);
+                        if (x < gridWidth - 1 && y < gridHeight - 1) newGrid[y + 1][x + 1] = Math.max(newGrid[y + 1][x + 1], intensity * decayRate * 0.7);
+                    }
+                }
+            }
+            grid.splice(0, grid.length, ...newGrid);
+        }
+
+        // Function to handle mouse clicks
+        function handleClick(event) {
+            const x = Math.floor(event.offsetX / cellSize);
+            const y = Math.floor(event.offsetY / cellSize);
+            if (x >= 0 && x < gridWidth && y >= 0 && y < gridHeight) {
+                grid[y][x] = 1;
+                if (!animationRunning) {
+                    animationRunning = true;
+                    animationQueue = [];
+                    animate();
+                }
+            }
+        }
+
+        // Function to animate the grid
+        function animate() {
+            updateGrid();
+            drawGrid();
+            if (animationRunning) {
+                let maxIntensity = 0;
+                for (let y = 0; y < gridHeight; y++) {
+                    for (let x = 0; x < gridWidth; x++) {
+                        maxIntensity = Math.max(maxIntensity, grid[y][x]);
+                    }
+                }
+                if (maxIntensity > threshold) {
+                    animationQueue.push(setTimeout(animate, 1000 / frameRate));
+                } else {
+                    animationRunning = false;
+                }
+            }
+        }
+
+        // Add event listener for mouse clicks
+        canvas.addEventListener('click', handleClick);
+
+        // Initialize the grid
+        drawGrid();
+    </script>
+</body>
+
+</html>

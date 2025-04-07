@@ -1,0 +1,39 @@
+body {
+    font-family: sans-serif;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.choice-container {
+    display: flex;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.hidden {
+    display: none;
+}
+
+a {
+    text-decoration: none;
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border-radius: 5px;
+}
+
+#start:target,
+#choice1a:target,
+#choice1b:target,
+#choice2a:target,
+#choice2b:target,
+#choice3a:target,
+#choice3b:target,
+#choice3c:target,
+#choice3d:target {
+    display: block;
+}

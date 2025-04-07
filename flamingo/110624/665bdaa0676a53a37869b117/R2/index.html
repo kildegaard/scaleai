@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebSocket Client</title>
+    <style>
+        /* Simple styles for better visibility */
+        #log {
+            white-space: pre-wrap;
+            font-family: monospace;
+            background-color: #f4f4f4;
+            padding: 10px;
+            border: 1px solid #ddd;
+            height: 300px;
+            overflow-y: scroll;
+        }
+    </style>
+</head>
+<body>
+    <h1>WebSocket Log Viewer</h1>
+    <div id="log"></div>
+
+    <script>
+        const socket = new WebSocket('ws://localhost:8080');
+
+        socket.onmessage = (event) => {
+            const logContent = event.data;
+            const logLines = logContent.split('\n');
+            const logElement = document.getElementById('log');
+
+            // Clear previous content
+            logElement.innerHTML = '';
+
+            // Append each log line to the log element
+            logLines.forEach((logLine) => {
+                if (logLine.trim()) { // Only add non-empty lines
+                    const lineElement = document.createElement('div');
+                    lineElement.textContent = logLine;
+                    logElement.appendChild(lineElement);
+                }
+            });
+        };
+
+        socket.onerror = (event) => {
+            console.error('Error occurred while connecting to the WebSocket server:', event);
+        };
+
+        socket.onclose = () => {
+            console.log('Disconnected from the WebSocket server.');
+        };
+    </script>
+</body>
+</html>

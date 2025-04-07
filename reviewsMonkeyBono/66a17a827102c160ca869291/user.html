@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio</title>
+    <style>
+        /* Basic Styles */
+        body {
+            font-family: sans-serif;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        a {
+            color: blue;
+            text-decoration: none;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: #f0f0f0;
+            padding: 20px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 10;
+            /* Ensure header stays on top */
+        }
+
+        /* Sidebar Styles */
+        aside {
+            width: 250px;
+            background-color: #eee;
+            padding: 20px;
+            position: fixed;
+            left: -250px;
+            /* Initially hide the sidebar */
+            top: 0;
+            height: 100%;
+            transition: transform 0.3s ease-in-out;
+            /* Smooth transition for sidebar */
+        }
+
+        /* Show sidebar when open */
+        aside.open {
+            transform: translateX(250px);
+            /* Slide sidebar into view */
+        }
+
+        /* Close Button for Sidebar */
+        .close-btn {
+            display: none;
+            /* Hide by default */
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
+        }
+
+        /* Show close button on smaller screens */
+        @media (max-width: 768px) {
+            .close-btn {
+                display: block;
+            }
+        }
+
+        /* Main Content Styles */
+        main {
+            flex: 1;
+            /* Allow main content to take up remaining space */
+            padding: 20px;
+            margin-top: 80px;
+            /* Account for fixed header height */
+        }
+
+        /* Project Grid Styles */
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            /* Responsive grid layout */
+            grid-gap: 20px;
+        }
+
+        .project-card {
+            border: 1px solid #ddd;
+            padding: 20px;
+            text-align: center;
+            transition: transform 0.2s ease;
+            /* Smooth hover effect */
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            /* Lift card on hover */
+        }
+
+        /* Footer Styles */
+        footer {
+            background-color: #f0f0f0;
+            padding: 20px;
+            text-align: center;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+        }
+
+        /* Adjust main content padding to avoid overlap with fixed header and footer */
+        main {
+            padding-top: 100px;
+            padding-bottom: 60px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header role="banner">
+        <h1>My Portfolio</h1>
+        <nav aria-label="Main Navigation">
+            <ul>
+                <li><a href="#about" tabindex="0">About</a></li>
+                <li><a href="#projects" tabindex="0">Projects</a></li>
+                <li><a href="#contact" tabindex="0">Contact</a></li>
+            </ul>
+        </nav>
+        <button class="open-btn" aria-label="Open Sidebar" aria-expanded="false" tabindex="0">
+            &#9776;
+        </button>
+    </header>
+
+    <aside role="complementary" aria-label="Sidebar">
+        <button class="close-btn" aria-label="Close Sidebar" aria-expanded="true" tabindex="0">
+            &times;
+        </button>
+        <h2>Sidebar Content</h2>
+        <ul>
+            <li><a href="#" tabindex="0">Link 1</a></li>
+            <li><a href="#" tabindex="0">Link 2</a></li>
+            <li><a href="#" tabindex="0">Link 3</a></li>
+        </ul>
+    </aside>
+
+    <main role="main">
+        <section id="about">
+            <h2>About Me</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sed diam eget risus varius blandit sit
+                amet non magna.</p>
+        </section>
+
+        <section id="projects">
+            <h2>My Projects</h2>
+            <div class="project-grid">
+                <div class="project-card" tabindex="0">
+                    <h3>Project 1</h3>
+                    <img src="project1.jpg" alt="Project 1 Image" width="300" height="200">
+                    <p>Short description of project 1.</p>
+                    <a href="#" tabindex="0">View Project</a>
+                </div>
+                <div class="project-card" tabindex="0">
+                    <h3>Project 2</h3>
+                    <video src="project2.mp4" width="300" height="200" controls></video>
+                    <p>Short description of project 2.</p>
+                    <a href="#" tabindex="0">View Project</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact">
+            <h2>Contact Me</h2>
+            <p>You can reach me at <a href="mailto:your.email@example.com" tabindex="0">your.email@example.com</a>.</p>
+        </section>
+    </main>
+
+    <footer role="contentinfo">
+        <p>&copy; 2023 Your Name</p>
+    </footer>
+
+    <script>
+        const openBtn = document.querySelector('.open-btn');
+        const closeBtn = document.querySelector('.close-btn');
+        const sidebar = document.querySelector('aside');
+
+        openBtn.addEventListener('click', () => {
+            sidebar.classList.add('open');
+            openBtn.setAttribute('aria-expanded', 'true');
+            closeBtn.setAttribute('aria-expanded', 'false');
+            sidebar.setAttribute('aria-hidden', 'false');
+            closeBtn.focus();
+        });
+
+        closeBtn.addEventListener('click', () => {
+            sidbar.classList.remove('open');
+            openBtn.setAttribute('aria-expanded', 'false');
+            closeBtn.setAttribute('aria-expanded', 'true');
+            sidebar.setAttribute('aria-hidden', 'true');
+            openBtn.focus();
+        });
+    </script>
+
+</body>
+
+</html>

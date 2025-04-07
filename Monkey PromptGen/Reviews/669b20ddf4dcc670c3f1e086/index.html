@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Bird Watcher's Log</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <header>
+        <h1>Bird Watcher's Log</h1>
+    </header>
+
+    <main>
+        <section id="search-bar">
+            <input id="input" type="text">
+        </section>
+        <section id="sighting-form">
+            <h2>Log a Sighting</h2>
+            <form>
+                <label for="species">Species:</label>
+                <input type="text" id="species" name="species" required>
+
+                <label for="date">Date:</label>
+                <input type="date" id="date" name="date" required>
+
+                <label for="location">Location:</label>
+                <input type="text" id="location" name="location" required>
+
+                <label for="photo-url">Photo URL:</label>
+                <input type="url" id="photo-url" name="photo-url">
+
+                <button type="submit">Add Sighting</button>
+            </form>
+        </section>
+
+        <section id="sighting-gallery">
+            <h2>Recent Sightings</h2>
+            <div id="gallery-content"></div>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

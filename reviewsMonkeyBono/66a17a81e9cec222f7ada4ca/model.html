@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Anniversary Adventure</title>
+    <style>
+        body {
+            font-family: sans-serif;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .choice-container {
+            display: flex;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        a {
+            text-decoration: none;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Anniversary Adventure</h1>
+
+        <div id="start">
+            <p>You stumble upon a mysterious portal. Do you:</p>
+            <div class="choice-container">
+                <a href="#choice1a">Enter the portal</a>
+                <a href="#choice1b">Walk away</a>
+            </div>
+        </div>
+
+        <div id="choice1a" class="hidden">
+            <p>The portal transports you to a magical forest. You see two paths. Do you:</p>
+            <div class="choice-container">
+                <a href="#choice2a">Take the path to the left</a>
+                <a href="#choice2b">Take the path to the right</a>
+            </div>
+        </div>
+
+        <div id="choice1b" class="hidden">
+            <p>You decide to play it safe and walk away. You live a long and uneventful life.
+                <br><a href="#start">Back to Start</a>
+            </p>
+        </div>
+
+        <div id="choice2a" class="hidden">
+            <p>You encounter a friendly unicorn. It offers you a ride. Do you:</p>
+            <div class="choice-container">
+                <a href="#choice3a">Accept the ride</a>
+                <a href="#choice3b">Politely decline</a>
+            </div>
+        </div>
+
+        <div id="choice2b" class="hidden">
+            <p>You stumble upon a treasure chest. Do you:</p>
+            <div class="choice-container">
+                <a href="#choice3c">Open the chest</a>
+                <a href="#choice3d">Leave it be</a>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+
+</html>

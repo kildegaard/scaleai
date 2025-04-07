@@ -1,0 +1,99 @@
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+public class TaskManager {
+
+    private static final String TASK_FILE = "tasks.dat";
+    private static final Logger LOGGER = Logger.getLogger(TaskManager.class.getName());
+    private final List<Task> tasks;
+    private final ExecutorService executor;
+
+    public TaskManager() {
+        this.tasks = loadTasks();
+        this.executor = Executors.newSingleThreadExecutor(); // Use a single thread for file operations
+    }
+
+    public Future<?> addTask(Task task) {
+        validateTask(task);
+        return executor.submit(() -> {
+            synchronized (tasks) {
+                if (tasks.stream().noneMatch(t -> t.getTitle().equals(task.getTitle()))) {
+                    tasks.add(task);
+                    saveTasks();
+                    LOGGER.info("Task added: " + task);
+                } else {
+                    LOGGER.warning("Task already exists: " + task);
+                }
+            }
+        });
+    }
+
+    public Future<List<Task>> getAllTasks() {
+        return executor.submit(() -> {
+            synchronized (tasks) {
+                return new ArrayList<>(tasks);
+            }
+        });
+    }
+
+    public Future<?> deleteTask(String title) {
+        return executor.submit(() -> {
+            synchronized (tasks) {
+                boolean removed = tasks.removeIf(task -> task.getTitle().equals(title));
+                if (removed) {
+                    saveTasks();
+                    LOGGER.info("Task deleted: " + title);
+                } else {
+                    LOGGER.warning("Task not found: " + title);
+                }
+            }
+        });
+    }
+
+    private void validateTask(Task task) {
+        if (task.getTitle() == null || task.getTitle().isEmpty()) {
+            throw new IllegalArgumentException("Task title cannot be empty.");
+        }
+        if (task.getPriority() < 1 || task.getPriority() > 5) {
+            throw new IllegalArgumentException("Task priority must be between 1 and 5.");
+        }
+        if (task.getDueDate().isBefore(LocalDate.now())) {
+            throw new IllegalArgumentException("Due date cannot be in the past.");
+        }
+    }
+
+    private synchronized void saveTasks() {
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(TASK_FILE))) {
+            oos.writeObject(tasks);
+            LOGGER.info("Tasks saved to file.");
+        } catch (IOException e) {
+            LOGGER.log(Level.SEVERE, "Error saving tasks to file.", e);
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    private synchronized List<Task> loadTasks() {
+        List<Task> loadedTasks = new ArrayList<>();
+        File file = new File(TASK_FILE);
+        if (file.exists()) {
+            try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file))) {
+                loadedTasks = (List<Task>) ois.readObject();
+                LOGGER.info("Tasks loaded from file.");
+            } catch (IOException | ClassNotFoundException e) {
+                LOGGER.log(Level.WARNING, "Error loading tasks from file. Starting with an empty list.", e);
+            }
+        }
+        return loadedTasks;
+    }
+}
